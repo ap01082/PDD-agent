@@ -25,7 +25,7 @@ RUN uv sync
 RUN uv run playwright install chromium
 RUN uv run playwright install-deps chromium
 
-RUN echo '[supervisord]\nnodaemon=true\nlogfile=/dev/stdout\n\n[program:xvfb]\ncommand=Xvfb :99 -screen 0 1280x800x24 -ac\npriority=1\n\n[program:x11vnc]\ncommand=x11vnc -display :99 -forever -shared -nopw -quiet\npriority=2\n\n[program:novnc]\ncommand=websockify --web /usr/share/novnc 6080 localhost:5900\npriority=3\n\n[program:app]\ncommand=/app/.venv/bin/python app.py\npriority=4\nstdout_logfile=/dev/stdout\nstderr_logfile=/dev/stderr\n' > /etc/supervisor/conf.d/app.conf
+RUN echo '[supervisord]\nnodaemon=true\nlogfile=/dev/stdout\nlogfile_maxbytes=0\nuser=root\n\n[program:xvfb]\ncommand=Xvfb :99 -screen 0 1280x800x24 -ac\npriority=1\nautostart=true\nautorestart=true\nstdout_logfile=/dev/stdout\nstderr_logfile=/dev/stdout\n\n[program:x11vnc]\ncommand=x11vnc -display :99 -forever -shared -nopw -quiet\npriority=2\nautostart=true\nautorestart=true\nstdout_logfile=/dev/stdout\nstderr_logfile=/dev/stdout\n\n[program:novnc]\ncommand=websockify --web /usr/share/novnc 6080 localhost:5900\npriority=3\nautostart=true\nautorestart=true\nstdout_logfile=/dev/stdout\nstderr_logfile=/dev/stdout\n\n[program:app]\ncommand=/app/.venv/bin/python app.py\npriority=4\nautostart=true\nautorestart=true\nstdout_logfile=/dev/stdout\nstderr_logfile=/dev/stdout\n' > /etc/supervisor/conf.d/app.conf
 
 EXPOSE 6080
 
