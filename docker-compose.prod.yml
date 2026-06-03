@@ -1,0 +1,17 @@
+services:
+  customer-agent:
+    image: ghcr.io/ap01082/PDD-agent:latest
+    container_name: customer-agent
+    ports:
+      - "6080:6080"
+    volumes:
+      - ./config.json:/app/config.json
+      - ./temp:/app/temp
+      - agent-data:/app/data
+    environment:
+      - RESOLUTION=1280x800
+    restart: unless-stopped
+    shm_size: "512m"
+
+volumes:
+  agent-data:

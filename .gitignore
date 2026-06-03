@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+.python-version
+config.json
+temp/
+logs/
+fix_docker.py
